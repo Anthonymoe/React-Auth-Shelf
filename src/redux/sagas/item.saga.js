@@ -8,21 +8,21 @@ function* itemSaga () {
 function* fetchAllItems() {
     // get all items from the DB
     try {
-        const items = yield axios.get('/api/shelf');
+        const items = yield axios.get('./api/shelf');
         console.log('In fetchAllItems() saga generator.', items.data);
         yield put({ type: 'SET_ITEMS', payload: items.data });
     } catch {
-        console.log('get all error');
+        console.log('get all error' );
     }
 }
 
-const items = (state = [], action ) =>{
-    switch (action.type) {
-        case 'SET_ITEMS':
-            return action.payload;
-        default:
-            return state;
-    }
-}
+// const items = (state = [], action ) =>{
+//     switch (action.type) {
+//         case 'SET_ITEMS':
+//             return action.payload;
+//         default:
+//             return state;
+//     }
+// }
 
-export default itemSaga;
+export default fetchAllItems;
