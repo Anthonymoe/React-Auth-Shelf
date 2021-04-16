@@ -6,7 +6,15 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
-  res.sendStatus(200); // For testing only, can be removed
+  const query = `SELECT * FROM items;`;
+  pool.query(query)
+  .then( result => {
+  res.send(result.rows);
+  })
+  .catch(err =>{
+    console.log('error in get items:', err );
+    res.sendStatus(500)
+  })
 });
 
 /**
@@ -17,7 +25,13 @@ router.post('/', (req, res) => {
   VALUES ($1, $2, $3)
   RETURNING "id";`
 
-  pool.query(insertItemString, [createdItemID, ])
+  pool.query(insertItemString, [ req.body.description, req.body.image, req.body.user ])
+  .then( result =>{
+    console.log('New item id:', result.rows[0].id);
+
+    const createdItemId = result.rows[0].id // this is where we ended for the day
+
+  })
 
 });
 
